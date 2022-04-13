@@ -166,7 +166,7 @@ function showOne()
 	if(pblo)
 	{
 		var vsrc=[];
-		var wyd=0;
+		
 		var xn=pblo.vlist.length;
 		for(var i=0;i<xn;i++)
 		{
@@ -175,7 +175,7 @@ function showOne()
 			if(urk)
 			{
 				
-				wyd=chvvv.videoWidth;
+				
 				chvvv.pause();
 				chvvv.currentTime=0;
 				chvvv.loop=false;
@@ -189,6 +189,8 @@ function showOne()
 			}
 		}
 
+		var wyd=vsrc[0].videoWidth;
+		pblo.rto=vsrc[0].videoHeight/wyd;
 		if(wyd>0&&wyd<500)
 		{
 			wyd=500;
@@ -198,6 +200,7 @@ function showOne()
 			}
 
 		}
+		
 		pblo.wyd=wyd;
 		pblo.vsrc=vsrc;
 		pblo.icur=0;
@@ -234,7 +237,7 @@ if(ele.tagName=='H3')
 	{
 		pblo.stk=true;
 		pblo.style.display='block';
-		pblo.style.border='';
+		pblo.style.margin='0px';
 		
 	}
 
@@ -271,6 +274,19 @@ if(ele.tagName=='H3')
 
 function rotvi(pblo,left)
 {
+	if(pblo.rto>1)
+	{
+		var xn=pblo.vsrc.length;
+
+		var exceed=(((pblo.rto-1)*pblo.wyd)).toFixed(0)+'px';
+		for(var i=0;i<xn;i++)
+		{
+			
+			pblo.vsrc[i].style.marginLeft = exceed;//'0 auto';
+		}
+		pblo.rto=0;
+	}
+
 	if(pblo.isrot)
 	{
 		pblo.isrot=false;
