@@ -1,4 +1,3 @@
-
 var pblo;
 var dbdy=document.body;
 
@@ -73,7 +72,10 @@ function setup()
 		if(svl==0)
 		{
 			var vuj=mkh1(blo,vydz[i],0);
-			blo.appendChild(vuj);
+			var foreffect=document.createElement('p');
+			blo.appendChild(foreffect);
+			foreffect.appendChild(vuj);
+			blo.eff=foreffect;
 			blo.vvs=new Uint8Array(1);
 			blo.vlist=[vuj];
 		}
@@ -422,4 +424,3 @@ var kycmd=function(e) {
 
 document.onclick=kontimg;
 document.onkeydown=kycmd;
-
