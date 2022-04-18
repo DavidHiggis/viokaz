@@ -26,9 +26,9 @@ function procbinary(blb,viop)
 	//vio.onloadeddata=vklr;
 
 	viop.src=window.URL.createObjectURL(new Blob([blb]));
-	viop.style.display = 'inline';
+	
 	viop.muted=true;
-	viop.autoplay=true;
+	
 	viop.controls=true;
 	viop.loop=true;
 }
@@ -40,7 +40,7 @@ loadedvid[fna]=viop;
 
 fetch(jtbase+fna+'.txt',{method: 'get',responseType: 'arraybuffer'}
 	).then(res => { return res.arrayBuffer();}
-	).then(ab => {procbinary(ab,viop);})
+	).then(ab => {procbinary(ab,viop); viop.style.display = 'inline'; viop.autoplay=true;})
 
 
 
@@ -61,6 +61,7 @@ function rqALL(vpblo)
 			).then(ab => {procbinary(ab,cvid); rqALL(vpblo);})
 		
 	}
+	else {showOne(vpblo);}
 
 }
 
@@ -240,16 +241,15 @@ function exitOne(origsiz)
 
 }
 
-function showOne()
+function showOne(dpblo)
 {
-	if(pblo)
-	{
+	
 		var vsrc=[];
 		
-		var xn=pblo.vlist.length;
+		var xn=dpblo.vlist.length;
 		for(var i=0;i<xn;i++)
 		{
-			var chvvv=pblo.vlist[i];
+			var chvvv=dpblo.vlist[i];
 			var urk=chvvv.src;
 			if(urk)
 			{
@@ -263,33 +263,33 @@ function showOne()
 				//chvvv.style.margin = '0 auto';
 				chvvv.style.display='none';
 				chvvv.onended=nxtloop;
-				chvvv.pblo=pblo;
+				chvvv.pblo=dpblo;
 				vsrc.push(chvvv);
 			}
 		}
 
 		var wyd=vsrc[0].videoWidth;
-		pblo.rto=vsrc[0].videoHeight/wyd;
+		dpblo.rto=vsrc[0].videoHeight/wyd;
 		if(wyd>0&&wyd<500)
 		{
 			wyd=500;
 			for(var i=0;i<xn;i++)
 			{
-				pblo.vlist[i].width=wyd;
+				dpblo.vlist[i].width=wyd;
 			}
 
 		}
 		
-		pblo.wyd=wyd;
-		pblo.vsrc=vsrc;
-		pblo.icur=0;
+		dpblo.wyd=wyd;
+		dpblo.vsrc=vsrc;
+		dpblo.icur=0;
 
-		pblo.vsrc[0].style.display='block';
-		pblo.vsrc[0].play();
+		dpblo.vsrc[0].style.display='block';
+		dpblo.vsrc[0].play();
 			
 			
 		
-	}
+	
 
 }
 
@@ -420,7 +420,7 @@ var kycmd=function(e) {
 	exitOne(false);
 	return;
         case 101:
-        showOne();
+        showOne(pblo);
         return;
 	case 65:
 		if(ldq.length==0)
@@ -431,6 +431,7 @@ var kycmd=function(e) {
 				if(pblo.vvs[i]==0)
 				{
 					ldq.push(i);
+					pblo.vvs[i]=2;
 				}
 				rqALL(pblo);
 			}
