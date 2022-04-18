@@ -61,7 +61,7 @@ function rqALL(vpblo)
 			).then(ab => {procbinary(ab,cvid); rqALL(vpblo);})
 		
 	}
-	else {showOne(vpblo);}
+	else { setTimeout(function(){showOne(vpblo);}, 200);}
 
 }
 
@@ -345,6 +345,13 @@ if(ele.tagName=='H3')
 	}
 	
 	
+} else if(ele.tagName=='VIDEO') {
+	if(ele.pblo) {
+		pblo=ele.pblo;
+	} else {
+		pblo=ele.parentElement.parentElement;
+	}
+
 }
 	
 }
