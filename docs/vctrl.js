@@ -1,6 +1,8 @@
+
 var pblo;
 var dbdy=document.body;
-
+var loadedvid = {};
+var ldq = new Array();
 
 
 function vklr()
@@ -11,7 +13,8 @@ function vklr()
 
 
 
-function procbinary(blb)
+
+function procbinary(blb,viop)
 {
 	var ba = new Uint8Array(blb);
 	var bylen=ba.byteLength;
@@ -22,25 +25,98 @@ function procbinary(blb)
 
 	//vio.onloadeddata=vklr;
 
-	vio.src=window.URL.createObjectURL(new Blob([blb]));
-	vio.style.display = 'inline';
-	vio.muted=true;
-	vio.autoplay=true;
-	vio.controls=true;
-	vio.loop=true;
+	viop.src=window.URL.createObjectURL(new Blob([blb]));
+	viop.style.display = 'inline';
+	viop.muted=true;
+	viop.autoplay=true;
+	viop.controls=true;
+	viop.loop=true;
 }
 
-function rq(fna)
+function rq(fna,viop)
 {
 
- fetch(jtbase+fna+'.txt',{
-        method: 'get',
-        responseType: 'arraybuffer'
-    }).then(res => { return res.arrayBuffer();}
-    ).then(ab => {procbinary(ab);}
-    )
+loadedvid[fna]=viop;
+
+fetch(jtbase+fna+'.txt',{method: 'get',responseType: 'arraybuffer'}
+	).then(res => { return res.arrayBuffer();}
+	).then(ab => {procbinary(ab,viop);})
 
 
+
+}
+
+function rqALL(vpblo)
+{
+	if(ldq.length>0)
+	{
+		var geet=ldq.pop();
+		var cvid= vpblo.vlist[geet];
+		var fna=cvid.title;
+
+		loadedvid[fna]=cvid;
+
+		fetch(jtbase+fna+'.txt',{method: 'get',responseType: 'arraybuffer'}
+			).then(res => { return res.arrayBuffer();}
+			).then(ab => {procbinary(ab,cvid); rqALL(vpblo);})
+		
+	}
+
+}
+
+function clearvid()
+{
+	
+
+	for (var key in loadedvid){
+		var cvid=loadedvid[key];
+		cvid.pause();
+		URL.revokeObjectURL(cvid.src);
+		cvid.src=null;
+		delete loadedvid[key];
+	}
+
+}
+var ezkole= document.createElement('FL');
+function vsyn()
+{
+	ezkole.innerHTML='**********<br>';
+	
+	var lky=Object.keys(loadedvid);
+	lky.sort();
+	var lkyl=lky.length;
+	var davvs=new Uint8Array(lkyl);
+	var davlist=new Array(lkyl);
+	var avah=0;
+	for (var nim = 0;nim<lkyl;nim++){
+		var key=lky[nim];
+		var cvid=loadedvid[key];
+		avah+=cvid.videoHeight;
+		davlist[nim]=cvid;
+		cvid.pause();
+		cvid.style.display = 'none';
+		davvs[nim]=2;
+		var h1= document.createElement('h3');
+		h1.innerText=key;
+		h1.vvv=nim;
+		
+		ezkole.appendChild(h1);
+		
+	}
+	var effy=document.createElement('p');
+	ezkole.appendChild(effy);
+	avah=(((avah/lkyl)>>3)+1)<<3;
+
+	for (var nim = 0;nim<lkyl;nim++){
+		var cvid=davlist[nim];
+		cvid.height=avah;
+		effy.appendChild(cvid);
+	}
+
+	ezkole.eff=effy;
+	ezkole.vvs=davvs;
+	ezkole.vlist=davlist;
+	pblo.appendChild(ezkole);
 
 }
 
@@ -50,6 +126,7 @@ function mkh1(blo,syg,idx)
 	var h1= document.createElement('h3');
 	h1.innerText=syg;
 	var vuj= document.createElement('video');
+	vuj.title=syg;
 	vuj.style.display = 'none';
 	h1.vvv=idx;
 	blo.appendChild(h1);
@@ -250,8 +327,8 @@ if(ele.tagName=='H3')
 		case 0:
 		pblo.vvs[elevvv]=1;
 		ele.style.color='#fff';
-		vio=pblovlistelevvv;
-		rq(ele.innerText);
+		//vio=pblovlistelevvv;
+		rq(ele.innerText,pblovlistelevvv);
 		return;
 		case 1:
 		pblo.vvs[elevvv]=2;
@@ -332,6 +409,7 @@ function allvsrc(lizt,typ,value)
 
 }
 
+
 var kycmd=function(e) {
     var ekeyCode=e.keyCode;
     switch (ekeyCode) {
@@ -344,6 +422,20 @@ var kycmd=function(e) {
         case 101:
         showOne();
         return;
+	case 65:
+		if(ldq.length==0)
+		{
+			var vvsl=pblo.vvs.length
+			for(var i=0;i<vvsl;i++)
+			{
+				if(pblo.vvs[i]==0)
+				{
+					ldq.push(i);
+				}
+				rqALL(pblo);
+			}
+		}
+	return;
 	case 66:
 		if(pblo.eff.style.webkitFilter)
 		{
@@ -424,3 +516,4 @@ var kycmd=function(e) {
 
 document.onclick=kontimg;
 document.onkeydown=kycmd;
+
