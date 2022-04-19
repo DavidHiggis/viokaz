@@ -36,6 +36,11 @@ function procbinary(blb,viop)
 function rq(fna,viop)
 {
 
+var nyviop=document.createElement('video');
+viop.replaceWith(nyviop);
+viop=nyviop;
+viop.title=fna;
+
 loadedvid[fna]=viop;
 
 fetch(jtbase+fna+'.txt',{method: 'get',responseType: 'arraybuffer'}
@@ -43,7 +48,7 @@ fetch(jtbase+fna+'.txt',{method: 'get',responseType: 'arraybuffer'}
 	).then(ab => {procbinary(ab,viop); viop.style.display = 'inline'; viop.autoplay=true;})
 
 
-
+return viop;
 }
 
 function rqALL(vpblo)
@@ -53,6 +58,14 @@ function rqALL(vpblo)
 		var geet=ldq.pop();
 		var cvid= vpblo.vlist[geet];
 		var fna=cvid.title;
+		var origsty=cvid.style.cssText;
+		var nyviop=document.createElement('video');
+		cvid.replaceWith(nyviop);
+		cvid=nyviop;
+		cvid.title=fna;
+		cvid.style.cssText=origsty;
+		vpblo.vlist[geet]=cvid;
+		
 
 		loadedvid[fna]=cvid;
 
@@ -86,7 +99,7 @@ function vsyn()
 	var lky=Object.keys(loadedvid);
 	lky.sort();
 	var lkyl=lky.length;
-	var davvs=new Uint8Array(lkyl);
+	var davvs=new Int8Array(lkyl);
 	var davlist=new Array(lkyl);
 	var avah=0;
 	for (var nim = 0;nim<lkyl;nim++){
@@ -126,7 +139,7 @@ function mkh1(blo,syg,idx)
 	
 	var h1= document.createElement('h3');
 	h1.innerText=syg;
-	var vuj= document.createElement('video');
+	var vuj= document.createElement('b');
 	vuj.title=syg;
 	vuj.style.display = 'none';
 	h1.vvv=idx;
@@ -147,14 +160,16 @@ function setup()
 		
 		
 		var svl=vydz[i+1];
+		var foreffect=document.createElement('p');
+		blo.eff=foreffect;
 		if(svl==0)
 		{
 			var vuj=mkh1(blo,vydz[i],0);
-			var foreffect=document.createElement('p');
+			
 			blo.appendChild(foreffect);
 			foreffect.appendChild(vuj);
-			blo.eff=foreffect;
-			blo.vvs=new Uint8Array(1);
+			
+			blo.vvs=new Int8Array(1);
 			blo.vlist=[vuj];
 		}
 		else
@@ -167,14 +182,13 @@ function setup()
 				
 			}
 			
-			var foreffect=document.createElement('p');
+			
 			blo.appendChild(foreffect);
 			for(var j=0;j<svl;j++)
 			{
 				foreffect.appendChild(vujarr[j]);
 			}
-			blo.eff=foreffect;
-			blo.vvs=new Uint8Array(svl);
+			blo.vvs=new Int8Array(svl);
 			blo.vlist=vujarr;
 		}
 		dbdy.appendChild(blo);
@@ -245,16 +259,16 @@ function showOne(dpblo)
 {
 	
 		var vsrc=[];
+		var davvs=dpblo.vvs;
+		var xn=davvs.length;
 		
-		var xn=dpblo.vlist.length;
 		for(var i=0;i<xn;i++)
 		{
-			var chvvv=dpblo.vlist[i];
-			var urk=chvvv.src;
-			if(urk)
+			
+			if(davvs[i]>0)
 			{
 				
-				
+				var chvvv=dpblo.vlist[i];
 				chvvv.pause();
 				chvvv.currentTime=0;
 				chvvv.loop=false;
@@ -268,7 +282,10 @@ function showOne(dpblo)
 			}
 		}
 
+		
 		var wyd=vsrc[0].videoWidth;
+		if(vsrc[0].height==0)
+		{
 		dpblo.rto=vsrc[0].videoHeight/wyd;
 		if(wyd>0&&wyd<500)
 		{
@@ -279,6 +296,7 @@ function showOne(dpblo)
 			}
 
 		}
+		} else {dpblo.rto=1.0;}
 		
 		dpblo.wyd=wyd;
 		dpblo.vsrc=vsrc;
@@ -328,13 +346,14 @@ if(ele.tagName=='H3')
 		pblo.vvs[elevvv]=1;
 		ele.style.color='#fff';
 		//vio=pblovlistelevvv;
-		rq(ele.innerText,pblovlistelevvv);
+		pblo.vlist[elevvv]=rq(ele.innerText,pblovlistelevvv);
 		return;
 		case 1:
 		pblo.vvs[elevvv]=2;
 		pblovlistelevvv.pause();
 		pblovlistelevvv.style.display='none';
 		return;
+		case -1:
 		case 2:
 		pblo.vvs[elevvv]=1;
 		pblovlistelevvv.play();
