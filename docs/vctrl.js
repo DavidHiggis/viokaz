@@ -192,6 +192,7 @@ function setup()
 			blo.vlist=vujarr;
 		}
 		dbdy.appendChild(blo);
+		vydz[i+1]=blo;
 	}
 
 }
