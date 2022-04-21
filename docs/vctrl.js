@@ -149,6 +149,17 @@ function mkh1(blo,syg,idx)
 	
 
 }
+function tmb()
+{
+	var vibsl=vydz.length;
+	for(var i=0;i<vibsl;i+=2)
+	{
+		
+		vydz[i+1].style.background="black url('http://127.0.0.1:8233/"+vydz[i]+".mp4') center right no-repeat";
+		vydz[i+1].style.backgroundSize="150px auto";
+	}
+
+}
 
 function setup()
 {
