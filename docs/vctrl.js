@@ -300,8 +300,11 @@ function showOne(dpblo)
 				chvvv.pause();
 				chvvv.currentTime=0;
 				chvvv.loop=false;
+				if(chvvv.muted)
+				{
 				chvvv.muted=false;
 				chvvv.volume = 0.2;
+				}
 				//chvvv.style.margin = '0 auto';
 				chvvv.style.display='none';
 				chvvv.onended=nxtloop;
