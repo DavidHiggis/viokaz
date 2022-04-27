@@ -381,12 +381,14 @@ if(ele.tagName=='H3')
 		return;
 		case 1:
 		pblo.vvs[elevvv]=2;
+		ele.style.color='#777';
 		pblovlistelevvv.pause();
 		pblovlistelevvv.style.display='none';
 		return;
 		case -1:
 		case 2:
 		pblo.vvs[elevvv]=1;
+		ele.style.color='#fff';
 		pblovlistelevvv.play();
 		pblovlistelevvv.style.display='inline';
 		return;
