@@ -220,7 +220,12 @@ function setup()
 					bigkoleNum=[];
 					vydz2.push(bigkole);
 					vydz2.push(bigkoleNum);
-				} else if (bigkole.length > 5) { syg=sio.substring(0,4);}
+				} else {
+					var bbl=bigkole.length;
+					if(bbl> 8) {syg=sio.substring(0,5);}
+					else if(bbl > 5){syg=sio.substring(0,4);}
+					
+				}
 
 				if(svl==0) {
 					bigkole.push(sio);
