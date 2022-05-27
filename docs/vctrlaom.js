@@ -180,7 +180,7 @@ function tmb()
 var ynfo=new ArrayBuffer(2048);
 var vydzbak=null;
 
-function setup()
+function setup(ybt=null)
 {
 	var vibsl=vydz.length;
 	var kydx=0;
@@ -199,6 +199,12 @@ function setup()
 	{
 		var vibsl2=vibsl>>1;
 		vydzbak=new Uint8Array(ynfo,2048-vibsl2,vibsl2);
+	}
+	
+	if(ybt)
+	{
+		vydz=ybt;
+		vibsl=vydz.length;
 	}
 	
 	kydx=0;
@@ -309,7 +315,7 @@ function setup()
 
 }
 
-function setup0()
+function setup0(ybt=null)
 {
 
 	var vibsl=vydz.length;
@@ -330,6 +336,12 @@ function setup0()
 	{
 		var vibsl2=vibsl>>1;
 		vydzbak=new Uint8Array(ynfo,2048-vibsl2,vibsl2);
+	}
+	
+	if(ybt)
+	{
+		vydz=ybt;
+		vibsl=vydz.length;
 	}
 	
 	kydx=0;
