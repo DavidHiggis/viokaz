@@ -168,6 +168,7 @@ function tmb()
 		vydz[i+1].style.background="black url('http://127.0.0.1:8233/"+vydz[i]+".mp4') center right no-repeat";
 		vydz[i+1].style.backgroundSize="150px auto";
 	}
+	localStorage.setItem(vydz[0], 'tt');
 
 }
 
@@ -312,6 +313,10 @@ function setup1(ybt=null)
 		
 		
 	}
+	if(localStorage.getItem(vydz[0]))
+	{
+		tmb();
+	}
 
 
 }
@@ -399,6 +404,10 @@ function setup(ybt=null)
 		kydx++;
 	}
 	vsynvvs=new Int8Array(ynfo,ynfoidx,1024-ynfoidx);
+	if(localStorage.getItem(vydz[0]))
+	{
+		tmb();
+	}
 
 }
 
